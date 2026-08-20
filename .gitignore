@@ -3,15 +3,27 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# PyInstaller build files
+# Distribution / Packaging
 build/
+dist/
 *.spec
+*.manifest
 
-# Distribution / Packaging (uncomment if you don't want to track binaries)
-# dist/
-
-# Environment / IDE
+# Virtual Environments
 .venv/
 env/
-.idea/
+venv/
+ENV/
+
+# IDE / Editor configuration
 .vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store

@@ -1,15 +1,15 @@
-# 🌿 LeafTimer • Windows 11 Shutdown Timer
+# 🌿 LeafTimer
 
-> A simplistic, open source desktop shutdown timer for Windows 11.
+> A simplistic, modern desktop shutdown timer for Windows 11 with a peaceful touch of nature. Free, lightweight, and open source.
 
 ![LeafTimer Banner](assets/app_icon.png)
 
 ---
 
-## Features
+## ✨ Features
 
-- **Style**: Clean Windows 11 Fluent interface with soft organic cards, botanical sage and pine tones, and dark/light mode toggle (🌙 / ☀️).
-- **Controls**:
+- **Simplistic & Modern**: Clean Windows 11 Fluent interface with soft organic cards, botanical sage and pine tones, and dark/light mode toggle (🌙 / ☀️).
+- **Effortless Minute Controls**:
   - Smooth interactive slider (1 to 180 minutes).
   - Quick-preset pills (`15m`, `30m`, `45m`, `60m`, `90m`, `2h`).
   - Fine-tuning stepper buttons (`-15m`, `-5m`, `+5m`, `+15m`).
@@ -20,79 +20,79 @@
 
 ---
 
-## Website Landing Page
+## 🌐 Website & Web Preview
 
-A product landing page is included in **[`index.html`](index.html)**:
-- **Interactive Live Demo Widget**: Users can test the timer UI and slider directly in their web browser.
-- **Download Buttons**: Direct links for both the **Setup Installer** and **Portable Executable**.
-- **Deploy Ready**: Can be deployed with 1 click to GitHub Pages, Netlify, or Vercel.
+A single-page landing page is included in **[`index.html`](index.html)**:
+- **Interactive Live Demo**: Test the timer slider and presets directly in any browser.
+- **Deploy Ready**: Host for free with 1 click on **GitHub Pages**, **Netlify**, or **Vercel**.
 
 ---
 
-## How to Install & Run
+## 🚀 Quick Start (Running from Source)
 
-You can choose how you'd like to use LeafTimer:
+### 1. Prerequisites
+- Python 3.10+ on Windows 10/11
 
-### Option 1: Standard Windows Setup Wizard (`LeafTimer-Setup.exe`)
-1. Download or open **[`dist/LeafTimer-Setup.exe`](dist/LeafTimer-Setup.exe)**.
-2. Follow the setup wizard to install LeafTimer into your programs folder.
-3. Automatically adds shortcuts to your **Desktop** and **Windows Start Menu**.
-
-### Option 2: Standalone Portable (`LeafTimer.exe`)
-1. Download or open **[`dist/LeafTimer.exe`](dist/LeafTimer.exe)**.
-2. Runs immediately with a double-click. No installation wizard required.
-3. Perfect for USB drives or zero-install workflows.
-
-### Option 3: Run with Python / Batch
-If you prefer running directly from source code:
+### 2. Installation
 ```powershell
-# 1. Install dependencies
-pip install -r requirements.txt
+# Clone the repository
+git clone https://github.com/rubendonkers/leaftimer.git
+cd leaftimer
 
-# 2. Launch the app
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 3. Run Application
+```powershell
 python main.py
-# Or double-click run.bat / main.pyw
 ```
 
 ---
 
-## Project Structure
+## 🧪 Running Tests
+
+Run the automated test suite with Python's built-in `unittest`:
+
+```powershell
+python -m unittest discover -s tests
+```
+
+---
+
+## 🔨 Building Standalone Executable (`.exe`)
+
+To compile the standalone single-file Windows executable:
+
+```powershell
+python build_exe.py
+```
+
+The compiled binary will be output to `dist/LeafTimer.exe` (excluded from git tracking).
+
+---
+
+## 📁 Repository Structure
 
 ```text
-shutdown-timer/
-├── assets/                  # High-resolution botanical leaf icons (.png & .ico)
-├── dist/                    # Compiled distribution binaries
-│   ├── LeafTimer.exe        # Method 1: Portable standalone executable
-│   └── LeafTimer-Setup.exe  # Method 2: Standard Windows setup installer wizard
-├── tests/                   # Automated unit tests
+leaftimer/
+├── assets/                  # High-resolution application icons (.png & .ico)
+├── tests/                   # Automated unit test suite
 │   └── test_timer.py
-├── app.py                   # Main graphical user interface (CustomTkinter)
-├── timer_engine.py          # Background timer loop & Windows OS command hooks
-├── theme.py                 # Nature color palette & typography tokens
+├── app.py                   # Main Graphical User Interface (CustomTkinter)
+├── timer_engine.py          # Background countdown loop & Windows shutdown hooks
+├── theme.py                 # Botanical color palette & typography tokens
 ├── assets.py                # Procedural icon generator
-├── setup_wizard.py          # Modern Setup Wizard installer GUI
 ├── build_exe.py             # PyInstaller build automation script
-├── install.ps1 / .bat       # 1-click desktop & start menu shortcut installers
-├── run.bat                  # 1-click batch launcher
-├── index.html               # Product landing page & web preview
-└── requirements.txt         # Python package dependencies
+├── main.py                  # Application entry point
+├── index.html               # Product landing page & interactive demo
+├── requirements.txt         # Project dependencies
+├── LICENSE                  # MIT License
+└── README.md                # Project documentation
 ```
 
 ---
 
-## Building from Source
+## 📄 License
 
-To compile the binaries yourself:
-```powershell
-# Build the standalone portable executable:
-python build_exe.py
-
-# Build the setup installer:
-python -m PyInstaller --noconsole --onefile --name LeafTimer-Setup --icon=assets\app_icon.ico --add-data="dist\LeafTimer.exe;dist" --add-data="assets;assets" setup_wizard.py
-```
-
----
-
-## License
-
-This project is open source and available under the **MIT License**. You are free to use, modify, distribute, or sell it.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
