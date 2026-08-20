@@ -1,0 +1,17 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyInstaller build files
+build/
+*.spec
+
+# Distribution / Packaging (uncomment if you don't want to track binaries)
+# dist/
+
+# Environment / IDE
+.venv/
+env/
+.idea/
+.vscode/

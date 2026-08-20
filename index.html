@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeafTimer • Peaceful Windows 11 Shutdown Timer</title>
+  <meta name="description" content="A simplistic, modern Windows 11 shutdown timer desktop application with a touch of nature. Free, lightweight, and open source." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0D1310;
+      --bg-surface: #141C18;
+      --bg-surface-elevated: #1B2620;
+      --bg-glass: rgba(20, 28, 24, 0.75);
+      --border-subtle: rgba(78, 168, 116, 0.18);
+      --border-glow: rgba(78, 168, 116, 0.4);
+      
+      --accent-primary: #4EA874;
+      --accent-hover: #5EC48A;
+      --accent-glow: rgba(78, 168, 116, 0.35);
+      --accent-secondary: #A3C9A8;
+      --accent-warm: #E27D60;
+      
+      --text-main: #F0F6F2;
+      --text-muted: #8EA696;
+      --text-dim: #5C7565;
+      
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(64, 130, 91, 0.18) 0%, transparent 40%),
+        radial-gradient(circle at 85% 65%, rgba(42, 85, 60, 0.15) 0%, transparent 45%);
+      background-attachment: fixed;
+    }
+
+    /* Navigation */
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #4EA874, #2A5A3C);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1200px;
+      margin: 40px auto 80px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(78, 168, 116, 0.12);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-secondary);
+      margin-bottom: 24px;
+    }
+
+    .badge-pill span.dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-primary);
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    h1 span.gradient {
+      background: linear-gradient(135deg, #FFFFFF 30%, var(--accent-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h1 span.nature-pop {
+      color: var(--accent-primary);
+    }
+
+    .hero-p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      max-width: 520px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-p {
+        margin: 0 auto 32px;
+      }
+    }
+
+    .cta-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .cta-group {
+        justify-content: center;
+      }
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #4EA874, #3B875B);
+      color: #0B1710;
+      padding: 16px 28px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+      box-shadow: 0 10px 25px var(--accent-glow);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(78, 168, 116, 0.45);
+      background: linear-gradient(135deg, #5EC48A, #429966);
+    }
+
+    .download-meta {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 10px;
+    }
+
+    /* Interactive Live App Preview Mockup */
+    .preview-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .preview-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    }
+
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .app-title-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .app-badge {
+      width: 28px;
+      height: 28px;
+      background: #203328;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .app-title {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .app-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .display-box {
+      background: var(--bg-surface-elevated);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      margin-bottom: 20px;
+    }
+
+    .timer-digits {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .target-time {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+
+    .interactive-slider-box {
+      margin-bottom: 20px;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: #25332B;
+      height: 6px;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-primary);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .preset-pills {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .pill-btn {
+      background: #1C2922;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 8px 0;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .pill-btn.active, .pill-btn:hover {
+      background: var(--accent-primary);
+      color: #0A140E;
+      border-color: var(--accent-primary);
+      font-weight: 700;
+    }
+
+    .mock-start-btn {
+      width: 100%;
+      background: var(--accent-primary);
+      color: #0B1710;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .mock-start-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Features Grid */
+    .features-section {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-glow);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(78, 168, 116, 0.15);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* FAQ */
+    .faq-section {
+      max-width: 800px;
+      margin: 80px auto;
+      padding: 0 24px;
+    }
+
+    .faq-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .faq-item h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .faq-item p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--accent-secondary);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="brand">
+      <div class="brand-icon">🌿</div>
+      <span>LeafTimer</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#preview">Live Demo</a>
+      <a href="#faq">FAQ</a>
+      <a href="dist/LeafTimer.exe" download class="btn-download" style="padding: 10px 20px; font-size: 0.9rem;">Download .exe</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="badge-pill">
+        <span class="dot"></span>
+        <span>Windows 11 Native • 100% Free & Open Source</span>
+      </div>
+      <h1>
+        <span class="gradient">Tranquil shutdown timing for your</span> <span class="nature-pop">Windows 11 PC.</span>
+      </h1>
+      <p class="hero-p">
+        A simplistic, modern desktop shutdown timer with an organic botanical design. Decide when your PC turns off with effortless presets and zero clutter.
+      </p>
+      <div class="cta-group">
+        <a href="dist/LeafTimer-Setup.exe" download class="btn-download">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Download Installer (Setup .exe)</span>
+        </a>
+        <a href="dist/LeafTimer.exe" download style="display: inline-flex; align-items: center; gap: 8px; background: rgba(78, 168, 116, 0.15); border: 1px solid var(--border-subtle); color: var(--accent-secondary); padding: 16px 22px; border-radius: var(--radius-md); font-weight: 600; text-decoration: none; transition: all 0.2s ease;">
+          <span>Portable Version (.exe)</span>
+        </a>
+      </div>
+      <p class="download-meta">✨ Choose standard Windows Setup or standalone Portable • Windows 11 / 10</p>
+    </div>
+
+    <!-- Live Interactive Mockup Widget -->
+    <div class="preview-card" id="preview">
+      <div class="app-header">
+        <div class="app-title-box">
+          <div class="app-badge">🌿</div>
+          <div>
+            <div class="app-title">LeafTimer</div>
+            <div class="app-subtitle">Peaceful PC Shutdown</div>
+          </div>
+        </div>
+        <div style="background: #1C2922; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 13px;">🌙</div>
+      </div>
+
+      <div class="display-box">
+        <div class="timer-digits" id="previewTimer">00:45:00</div>
+        <div class="target-time" id="previewTarget">PC will turn off at 23:15:00</div>
+        <div style="background: #283A30; height: 6px; border-radius: 3px; overflow: hidden;">
+          <div style="background: var(--accent-primary); width: 100%; height: 100%;"></div>
+        </div>
+      </div>
+
+      <div class="interactive-slider-box">
+        <div class="slider-header">
+          <span>Set Duration</span>
+          <span style="color: var(--accent-primary);" id="sliderBadge">45 min</span>
+        </div>
+        <input type="range" id="minuteSlider" min="1" max="180" value="45" />
+      </div>
+
+      <div class="preset-pills">
+        <div class="pill-btn" onclick="setPreset(15)">15m</div>
+        <div class="pill-btn" onclick="setPreset(30)">30m</div>
+        <div class="pill-btn active" onclick="setPreset(45)">45m</div>
+        <div class="pill-btn" onclick="setPreset(60)">1h</div>
+        <div class="pill-btn" onclick="setPreset(90)">90m</div>
+        <div class="pill-btn" onclick="setPreset(120)">2h</div>
+      </div>
+
+      <button class="mock-start-btn" onclick="alert('Download LeafTimer.exe below to start the real shutdown timer on your PC!')">
+        🌿 Start Shutdown Timer
+      </button>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features-section" id="features">
+    <div class="section-title">
+      <h2>Crafted for simplicity & peace of mind</h2>
+      <p>Everything you need in a modern shutdown timer, with zero bloat.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="feature-card">
+        <div class="feature-icon">🌿</div>
+        <h3>Modern Nature Theme</h3>
+        <p>Calming forest sage tones, rounded cards, and smooth animations that fit right into Windows 11 Fluent design.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Effortless Presets & Steppers</h3>
+        <p>Jump to 15, 30, 45, 60, or 120 minutes with a single click, or fine-tune with the smooth interactive slider.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Safe 1-Click Cancel</h3>
+        <p>Changed your mind? Cancel anytime with one touch to cleanly halt the timer and revoke all Windows shutdown schedules.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="section-title">
+      <h2>Frequently Asked Questions</h2>
+    </div>
+
+    <div class="faq-item">
+      <h4>Do I need to install Python or other tools?</h4>
+      <p>No! LeafTimer is bundled into a standalone Windows executable (<code>.exe</code>). You simply download and click to run.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>Can I choose Restart or Sleep instead of Shutdown?</h4>
+      <p>Yes. LeafTimer includes a simple toggle between Shutdown, Restart, and Sleep modes.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>Is LeafTimer safe and free of telemetry?</h4>
+      <p>100%. There are zero trackers, ads, background telemetry, or internet connections required. It executes purely on your local machine.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>🌿 <strong>LeafTimer</strong> • Built with modern Windows 11 & botanical aesthetics.</p>
+    <p style="margin-top: 8px; font-size: 0.8rem;">100% Free & Open Source Desktop Software</p>
+  </footer>
+
+  <!-- Script for Live Interactive Mockup -->
+  <script>
+    const slider = document.getElementById('minuteSlider');
+    const badge = document.getElementById('sliderBadge');
+    const timerDisplay = document.getElementById('previewTimer');
+    const targetDisplay = document.getElementById('previewTarget');
+    const pills = document.querySelectorAll('.pill-btn');
+
+    function updateTime(mins) {
+      badge.textContent = `${mins} min`;
+      const hrs = Math.floor(mins / 60);
+      const remainingMins = mins % 60;
+      timerDisplay.textContent = `${String(hrs).padStart(2, '0')}:${String(remainingMins).padStart(2, '0')}:00`;
+
+      const now = new Date();
+      now.setMinutes(now.getMinutes() + parseInt(mins));
+      const targetStr = now.toTimeString().split(' ')[0];
+      targetDisplay.textContent = `PC will turn off at ${targetStr}`;
+
+      pills.forEach(p => {
+        const text = p.textContent;
+        const pillMins = text.includes('h') ? parseInt(text) * 60 : parseInt(text);
+        if (pillMins === parseInt(mins)) {
+          p.classList.add('active');
+        } else {
+          p.classList.remove('active');
+        }
+      });
+    }
+
+    slider.addEventListener('input', (e) => {
+      updateTime(e.target.value);
+    });
+
+    function setPreset(mins) {
+      slider.value = mins;
+      updateTime(mins);
+    }
+
+    // Initial load
+    updateTime(45);
+  </script>
+</body>
+</html>
