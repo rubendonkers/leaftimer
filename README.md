@@ -1,12 +1,11 @@
-# 🌿 LeafTimer
+# LeafTimer
 
-> A simplistic, modern desktop shutdown timer for Windows 11 with a peaceful touch of nature. Free, lightweight, and open source.
+> A simplistic, open source desktop shutdown timer for Windows 11.
 
-![LeafTimer Banner](assets/app_icon.png)
 
 ---
 
-## ✨ Features
+## Features
 
 - **Simplistic & Modern**: Clean Windows 11 Fluent interface with soft organic cards, botanical sage and pine tones, and dark/light mode toggle (🌙 / ☀️).
 - **Effortless Minute Controls**:
@@ -20,7 +19,7 @@
 
 ---
 
-## 🌐 Website & Web Preview
+## Website & Web Preview
 
 A single-page landing page is included in **[`index.html`](index.html)**:
 - **Interactive Live Demo**: Test the timer slider and presets directly in any browser.
@@ -28,7 +27,7 @@ A single-page landing page is included in **[`index.html`](index.html)**:
 
 ---
 
-## 🚀 Quick Start (Running from Source)
+## Quick Start (Running from Source)
 
 ### 1. Prerequisites
 - Python 3.10+ on Windows 10/11
@@ -50,7 +49,7 @@ python main.py
 
 ---
 
-## 🧪 Running Tests
+## Running Tests
 
 Run the automated test suite with Python's built-in `unittest`:
 
@@ -60,7 +59,7 @@ python -m unittest discover -s tests
 
 ---
 
-## 🔨 Building Standalone Executable (`.exe`)
+## Building Standalone Executable (`.exe`)
 
 To compile the standalone single-file Windows executable:
 
@@ -72,7 +71,7 @@ The compiled binary will be output to `dist/LeafTimer.exe` (excluded from git tr
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
 leaftimer/
@@ -93,6 +92,6 @@ leaftimer/
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
